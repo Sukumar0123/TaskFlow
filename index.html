@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow - Daily Planner & Diary</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">TF</div>
+        <div>
+          <h1>TaskFlow</h1>
+          <p>Planner & Diary</p>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-btn active" data-view="today">Today</button>
+        <button class="nav-btn" data-view="all">All Tasks</button>
+        <button class="nav-btn" data-view="diary">Diary</button>
+        <button class="nav-btn" data-view="history">History</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span class="mini-label">Today's mood</span>
+        <select id="moodSelect">
+          <option value="😊 Productive">😊 Productive</option>
+          <option value="🙂 Good">🙂 Good</option>
+          <option value="😐 Normal">😐 Normal</option>
+          <option value="😫 Tired">😫 Tired</option>
+          <option value="🔥 Focused">🔥 Focused</option>
+        </select>
+      </div>
+
+      <button id="themeToggle" class="secondary-btn">🌙 Dark Mode</button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="date-text" id="currentDateText"></p>
+          <h2 id="pageTitle">Today's Plan</h2>
+        </div>
+        <button id="newDayBtn" class="primary-btn">Start New Day</button>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span>Total</span>
+          <strong id="totalCount">0</strong>
+        </div>
+        <div class="stat-card success">
+          <span>Completed</span>
+          <strong id="completedCount">0</strong>
+        </div>
+        <div class="stat-card warning">
+          <span>Pending</span>
+          <strong id="pendingCount">0</strong>
+        </div>
+        <div class="stat-card info">
+          <span>Progress</span>
+          <strong id="progressPercent">0%</strong>
+        </div>
+      </section>
+
+      <section class="progress-wrap">
+        <div class="progress-info">
+          <span>Today's Progress</span>
+          <span id="progressLabel">0%</span>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      </section>
+
+      <section id="tasksSection" class="panel">
+        <div class="panel-header">
+          <div>
+            <h3>Tasks</h3>
+            <p>Write what you need to complete today.</p>
+          </div>
+        </div>
+
+        <form id="taskForm" class="task-form">
+          <input id="taskTitle" type="text" placeholder="Example: Complete login page" required />
+          <input id="taskTime" type="time" />
+          <select id="taskCategory">
+            <option value="Work">Work</option>
+            <option value="Study">Study</option>
+            <option value="Personal">Personal</option>
+            <option value="Health">Health</option>
+            <option value="Urgent">Urgent</option>
+          </select>
+          <select id="taskPriority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+          <textarea id="taskNote" placeholder="Optional task note"></textarea>
+          <button class="primary-btn" type="submit">+ Add Task</button>
+        </form>
+
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="Search tasks or notes..." />
+          <div class="filter-row">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="high">High</button>
+          </div>
+        </div>
+
+        <div id="taskList" class="task-list"></div>
+        <div id="emptyTasks" class="empty-state hidden">No tasks found. Add your first task for today.</div>
+      </section>
+
+      <section id="diarySection" class="panel hidden">
+        <div class="panel-header">
+          <div>
+            <h3>Daily Diary</h3>
+            <p>Write what happened today, what you learned, or what to continue tomorrow.</p>
+          </div>
+          <span id="diarySaveStatus" class="save-status">Saved</span>
+        </div>
+        <textarea id="diaryText" class="diary-box" placeholder="Today I completed... Tomorrow I need to..."></textarea>
+      </section>
+
+      <section id="historySection" class="panel hidden">
+        <div class="panel-header">
+          <div>
+            <h3>History</h3>
+            <p>Previous tasks and diary entries grouped by date.</p>
+          </div>
+        </div>
+        <input id="historySearch" class="full-search" type="search" placeholder="Search history or diary..." />
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-card">
+      <h3>Delete task?</h3>
+      <p>This task will be removed permanently.</p>
+      <div class="modal-actions">
+        <button id="cancelDelete" class="secondary-btn">Cancel</button>
+        <button id="confirmDelete" class="danger-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
